@@ -3,8 +3,13 @@ const app = express();
 const cors = require('cors')
 const favicon = require('express-favicon');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
+require('dotenv').config()
 
-const mainRouter = require('./routes/mainRouter.js');
+const authRouter = require('./routes/auth.js')
+const eventsRouter = require('./routes/events.js')
+const searchRouter = require('./routes/search.js')
+const bookmarksRouter = require('./routes/bookmarks.js')
 
 // middleware
 app.use(cors());
@@ -13,8 +18,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(express.static('public'))
 app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(bodyParser.json());
 
 // routes
-app.use('/api/v1', mainRouter);
+app.get('/api/v1', (req, res) => {
+        return res.json({ data: 'This is a full stack app!' })
+    }
+)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/events', eventsRouter)
+app.use('/api/v1/search', searchRouter)
+app.use('/api/v1/bookmarks', bookmarksRouter)
 
 module.exports = app;
