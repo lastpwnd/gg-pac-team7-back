@@ -39,17 +39,17 @@ const loginUser = async (req, res) => {
 
 const checkUser = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id)
+         const user = await User.findById(req.user.userID)
 
-        if (!user) {
-             return res.status(StatusCodes.NOT_FOUND).json({ msg: "User not found" })
-        }
+         if (!user) {
+              return res.status(StatusCodes.NOT_FOUND).json({ msg: "User not found" })
+         }
 
-        const { password, ...userData} = user._doc 
-        res.json(userData)
+         const { _id, email } = user._doc 
+         return res.json({ _id, email })
 
     } catch (error) {
-        
+         
     }
 }
 

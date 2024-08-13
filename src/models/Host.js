@@ -9,7 +9,7 @@ const HostSchema = new mongoose.Schema({
         maxLength: 50
     },
     hostURL: [{
-        type: mongoose.SchemaTypes.Url,
+        type: mongoose.Schema.Types.Url,
     }],   
     hostEmail: {
         type:String,
