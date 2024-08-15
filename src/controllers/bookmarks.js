@@ -1,24 +1,27 @@
 const { StatusCodes } = require("http-status-codes");
+const Bookmark = require("../models/Bookmark");
 
-const getAllBookmarks = async (req, res) => {
+async function getAllBookmarks(req, res) {
   try {
-    const userId = req.user._id; // Assuming the user ID is stored in req.user
-    const bookmarks = await Bookmark.find({ user: userId });
+    const userId = req.user._id; // Ensure user ID is set in req.user
+    const bookmarks = await Bookmark.find({ user: userId }).populate("event"); // Populate event details if needed
     res.status(StatusCodes.OK).json(bookmarks);
   } catch (error) {
-    console.error("Error fetching bookmarks:", error);
+    console.error("Error fetching bookmarks:", error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "Failed to fetch bookmarks" });
   }
-};
+}
 
 const getBookmarkById = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user._id;
 
-    const bookmark = await Bookmark.findOne({ _id: id, user: userId });
+    const bookmark = await Bookmark.findOne({ _id: id, user: userId }).populate(
+      "event"
+    ); // Populate event details if needed
 
     if (!bookmark) {
       return res
@@ -28,7 +31,7 @@ const getBookmarkById = async (req, res) => {
 
     res.status(StatusCodes.OK).json(bookmark);
   } catch (error) {
-    console.error("Error fetching bookmark:", error);
+    console.error("Error fetching bookmark:", error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "Failed to fetch bookmark" });
@@ -42,7 +45,7 @@ const createBookmark = async (req, res) => {
     const savedBookmark = await newBookmark.save();
     res.status(StatusCodes.CREATED).json(savedBookmark);
   } catch (error) {
-    console.error("Error creating bookmark:", error);
+    console.error("Error creating bookmark:", error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "Failed to create bookmark" });
@@ -67,7 +70,7 @@ const deleteBookmarkById = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ msg: "Bookmark deleted successfully" });
   } catch (error) {
-    console.error("Error deleting bookmark:", error);
+    console.error("Error deleting bookmark:", error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "Failed to delete bookmark" });
