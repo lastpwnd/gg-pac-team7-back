@@ -1,24 +1,37 @@
-// controllers/search.js
-const { getCoordinates, getPlacesNearby } = require("../utils/googleMaps");
-const { StatusCodes } = require("http-status-codes");
+const {
+  getCoordinates,
+  getAddress,
+  getPlaceInfo,
+  getNearbyPlaces,
+} = require("../../utils/googleMaps");
 
-const searchEngine = async (req, res) => {
-  const { address, radius = 500, type = "restaurant" } = req.query;
+async function searchEngine(req, res) {
+  const { address, lat, lng, radius, type } = req.query;
 
   try {
-    // First, get the coordinates of the provided address
-    const location = await getCoordinates(address);
-
-    // Then, search for places nearby those coordinates
-    const places = await getPlacesNearby(location, radius, type);
-
-    res.status(StatusCodes.OK).json({ places });
+    if (address) {
+      const coordinates = await getCoordinates(address);
+      res.json({ coordinates });
+    } else if (lat && lng) {
+      const addressFromCoords = await getAddress(lat, lng);
+      res.json({ address: addressFromCoords });
+    } else if (address) {
+      const placeInfo = await getPlaceInfo(address);
+      res.json({ placeInfo });
+    } else if (lat && lng) {
+      const places = await getNearbyPlaces(
+        lat,
+        lng,
+        radius || 1500,
+        type || "restaurant"
+      );
+      res.json({ places });
+    } else {
+      res.status(400).json({ error: "Invalid query parameters" });
+    }
   } catch (error) {
-    console.error("Error searching for places:", error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ msg: "Failed to fetch nearby places" });
+    res.status(500).json({ error: error.message });
   }
-};
+}
 
 module.exports = { searchEngine };
