@@ -7,7 +7,7 @@ const registerValidation = [
     body('password', "Minimum length is 4, maximum - 30").isLength({min: 4, max: 30}),
     body('firstName', "Minimum length is 3, maximum - 20").trim().isLength({min: 3, max: 20}),
     body('lastName', "Minimum length is 3, maximum - 20").trim().isLength({min: 3, max: 20}),
-    body('avatar', "Valid URL is required").trim().isURL()
+    //body('avatar', "Valid URL is required").trim().isURL() //till better times
 ]
 
 const loginValidation = [
