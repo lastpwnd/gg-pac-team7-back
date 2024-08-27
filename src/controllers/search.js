@@ -19,14 +19,16 @@ async function searchEngine(req, res) {
     } else if (address && details) {
       const placeInfo = await getPlaceInfo(address)
       res.json({ placeInfo })
-    } else if (lat && lng) {
-      const places = await getNearbyPlaces(
+  //////////////// delete before production if not used ////////////////
+    } else if (lat && lng) {  
+      const places = await getNearbyPlaces(   
         lat,
         lng,
         radius || 1500,
         type || "restaurant"
       )
       res.status(StatusCodes.OK).json({ places })
+  //////////////////////////////////////////////////////////////////////
     } else {
       res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid query parameters" })
     }

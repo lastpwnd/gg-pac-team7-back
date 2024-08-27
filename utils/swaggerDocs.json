@@ -38,16 +38,19 @@
           "Auth"
         ],
         "summary": "Register User",
+        "description": "Register new user request. All fields required, except 'avatarUrl'",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "firstName": "Wi",
-                  "lastName": "Smith",
-                  "email": "notthatwismithmail.com",
-                  "password": "145"
+                  "firstName": "Kate",
+                  "lastName": "Connor",
+                  "email": "connor95@mail.com",
+                  "password": "",
+                  "avatarUrl": ""
+
                 }
               }
             }
@@ -69,6 +72,7 @@
           "Auth"
         ],
         "summary": "Login User",
+        "description": "User login request. Correct email/password pair is required. Gives JSONWebToken in return",
         "requestBody": {
           "content": {
             "application/json": {
@@ -76,7 +80,7 @@
                 "type": "object",
                 "example": {
                   "email": "newman92@mail.com",
-                  "password": "12345"
+                  "password": ""
                 }
               }
             }
@@ -98,6 +102,7 @@
           "Auth"
         ],
         "summary": "Check User",
+        "description": "Authenticating request. Checks whether user is authed or not",
         "security": [
           {
             "bearerAuth": []
@@ -119,14 +124,16 @@
           "Events"
         ],
         "summary": "Get All Events",
-        "parameters":[
+        "description": "If successful, returns all the events from DB as an array of objects. Query parameters may apply.",
+        "parameters": [
           {
-            "name": "type",
+            "name": "category",
             "in": "query",
             "schema": {
               "type": "string"
             },
-            "example": "food"
+            "example": "food",
+            "description": "Defines the type of event: food, animal, environment, health, social"
           },
           {
             "name": "date",
@@ -134,7 +141,8 @@
             "schema": {
               "type": "integer"
             },
-            "example": "1"
+            "example": "1",
+            "description": "Specifies the sorting order by date: '1' - chronological, '-1' - reversed"
           },
           {
             "name": "title",
@@ -142,7 +150,8 @@
             "schema": {
               "type": "integer"
             },
-            "example": "1"
+            "example": "-1",
+            "description": "Specifies the sorting order by title: '1' - alphabetical, '-1' - reversed"
           }
         ],
         "responses": {
@@ -153,48 +162,36 @@
             }
           }
         }
-      }
-    },
-    "/api/v1/events/66caa7b73c3c30553423a277": {
-      "get": {
-        "tags": [
-          "Events"
-        ],
-        "summary": "Get Event",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/events/": {
+      },
       "post": {
         "tags": [
           "Events"
         ],
         "summary": "Create Event",
+        "description": "Event creation request. If passes the validator, will return status 200 and copy of the created object. For authenticated user only. Non-required attributes: endDate, address, restrictions, eventImages",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "title": "Early Learning and Child Care",
-                  "startDate": "2024-10-01T02:00Z",
-                  "endDate": "2024-11-31T12:00Z",
+                  "title": "Family Game Night at the Pool",
+                  "startDate": "2024-08-29T11:30Z",
+                  "endDate": "2024-08-29T13:00Z",
                   "coordinates": [
                     35.6546368,
                     -78.3542594
                   ],
                   "address": "120 Flowers Pkwy, Clayton, NC 27527",
-                  "type": "social",
-                  "description": "People who understand the cognitive, physical and social development of kids, the support parents and families need and the importance of maintaining a safe, clean environment for children to learn and thrive",
+                  "category": "social",
+                  "description": "Come with your family to the East Triangle YMCA for some fellowship and games!",
+                  "restrictions":"none",
                   "hostName": "East Triangle YMCA",
-                  "hostUrl": "https://www.ymcatriangle.org/locations/east-triangle-ymca"
+                  "eventUrl":"https://www.ymcatriangle.org/events/east-triangle-y-family-game-night-pool-0",
+                  "eventImages": [
+                    "https://www.ymcatriangle.org/sites/default/files/2024-06/uno.jpeg",
+                    "https://media.istockphoto.com/id/484794638/photo/volunteer-teacher-reading-to-a-class-of-preschool-kids.jpg?s=612x612&w=0&k=20&c=pq87RBcLRKYYjJmp0s-Y45263_LsCQpokQSakkw5kvQ="
+                  ]
                 }
               }
             }
@@ -215,29 +212,69 @@
         }
       }
     },
-    "/api/v1/events/66casdsdsdsdbb40f08b594b3ee8f1dc": {
+    "/api/v1/events/{eventId}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Get Event",
+        "description": "If successful, returns the event object with designated ID. Path parameter is required.",
+        "parameters":[
+          {
+            "name": "eventId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required":true,
+            "example":"66cabb40f08b594b3ee8f1dc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
       "put": {
         "tags": [
           "Events"
         ],
         "summary": "Update Event",
+        "description": "If successful, modifies the designated event. Path parameter is required.",
+        "parameters":[
+          {
+            "name": "eventId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required":true,
+            "example":"66cabb40f08b594b3ee8f1dc"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "example": {
-                  "type": "food"
+                  "title": "Feed'em All!",
+                  "startDate":"2024-08-29T11:30Z",
+                  "restrictions":"No pets, no alcohol"
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -246,9 +283,7 @@
             }
           }
         }
-      }
-    },
-    "/api/v1/events/66cc05bb3c36726ff9e95c47": {
+      },
       "delete": {
         "tags": [
           "Events"
@@ -257,6 +292,18 @@
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "description": "If successful, deletes the designated event. Path parameter is required.",
+        "parameters":[
+          {
+            "name": "eventId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required":true,
+            "example":"66cabb40f08b594b3ee8f1dc"
           }
         ],
         "responses": {
@@ -273,7 +320,8 @@
       "get": {
         "tags": [
           "Bookmarks"
-        ],
+        ], 
+        "description": "If successful, returns an array of user-related bookmarks. Authentication is required",
         "summary": "Get All Bookmarks",
         "security": [
           {
@@ -294,37 +342,7 @@
           "Bookmarks"
         ],
         "summary": "Create Bookmark",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "event": "66caa90b77a797377a87948a"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Bookmarks"
-        ],
-        "summary": "Update Bookmark",
+        "description": "If successful, creates a user-related bookmark. Authentication is required",
         "requestBody": {
           "content": {
             "application/json": {
@@ -352,12 +370,24 @@
         }
       }
     },
-    "/api/v1/bookmarks/66cd1a45ff600537b360a5ef": {
+    "/api/v1/bookmarks/{bookmarkId}": {
       "get": {
         "tags": [
           "Bookmarks"
         ],
         "summary": "Get Bookmark",
+        "description": "If successful, returns the user-related bookmark with designated ID. Authentication and path parameter are required",
+        "parameters":[
+          {
+            "name": "bookmarkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required":true,
+            "example":"66cabb40f08b594b3ee8f1dc"
+          }
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -377,6 +407,18 @@
           "Bookmarks"
         ],
         "summary": "Delete Bookmark",
+        "description": "If successful, deletes the user-related bookmark with designated ID. Authentication and path parameter are required",
+        "parameters":[
+          {
+            "name": "bookmarkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required":true,
+            "example":"66cabb40f08b594b3ee8f1dc"
+          }
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -398,30 +440,16 @@
           "Search (GEO)"
         ],
         "summary": "GEO Search",
+        "description": "Request to interact with Google Map API, provides GEO data. Use either lat/lng pair or address. Address can be accompanied with 'details' parameter",
         "parameters": [
-          {
-            "name": "details",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            },
-            "example": "1"
-          },
-          {
-            "name": "address",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "example": "2013 Raleigh Blvd, Raleigh, NC 27604"
-          },
           {
             "name": "lat",
             "in": "query",
             "schema": {
               "type": "double"
             },
-            "example": "33.8895765"
+            "example": "35.9042302",
+            "description": "Latitude parameter. Must be accompanied with longitude. If successful, returns the address of designated spot"
           },
           {
             "name": "lng",
@@ -429,7 +457,26 @@
             "schema": {
               "type": "double"
             },
-            "example": "-78.0382568"
+            "example": "-78.65600669999999",
+            "description": "Longitude parameter. Must be accompanied with latitude. If successful, returns the address of designated spot"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "9650 Strickland Rd #175, Raleigh, NC 27615",
+            "description": "Address parameter. Returns the coordinates of designated address. Can be accompanied by 'details' parameter for extra information"
+          },
+          {
+            "name": "details",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1",
+            "description": "Works only in pair with 'address' parameter. Provides with detailed information"
           }
         ],
         "responses": {
