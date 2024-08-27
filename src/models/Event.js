@@ -1,56 +1,58 @@
 const mongoose = require('mongoose')
 
 const EventSchema = new mongoose.Schema({
-    eventTitle: {
+    title: {
         type: String,
-        unique:true,
-        required:true,
+        unique: true,
+        required: true,
         minLength: 10,
-        maxLength: 100
+        maxLength: 100,
     },
-    eventStartDate: {
+    startDate: {
         type: Date,
-        required:true,
+        required: true,
     },
-    eventEndDate: {
-        type: Date,
-        required:true,
+    endDate: {
+        type: Date
     },
-    eventLocation: {
-        type: {
-            type: String,
-            required:true,
-            default: 'Point',
-        },
-        coordinates: {
-            type: [Number],
-            required:true,
-            default: undefined,
-        }
-    },
-    eventType: {
+    address: {
         type: String,
-        enum: ['value1', 'value2', 'value3', 'value4', 'value5'],
-        default: 'value1'
+        default: '',
+    },
+    coordinates: {
+        type: [Number],
+        required: true,
+        default: undefined,
+    },
+    category: {
+        type: String,
+        enum: ['food', 'animal', 'environment', 'health', 'social'],
+        default:'social',
+        required: true
     },  
-    eventDescription: {
+    description: {
         type: String,
-        required:true,
-        minLength: 25,
+        required: true
     },
-    eventRestrictions: {
+    restrictions: {
         type: String,
         default: 'none'
     },
-    eventHost: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Host',
-        required:true,
+    hostName: {
+        type: String,
+        required: true
+    },
+    eventUrl: {
+        type: String,
+        required: true
+    },
+    eventImages: {
+        type: [String]
     }
 
 },
 {
-    timestamps:true,
+    timestamps: true,  
 })
 
 module.exports = mongoose.model('Event', EventSchema) 

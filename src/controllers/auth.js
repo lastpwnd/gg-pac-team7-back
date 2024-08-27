@@ -20,12 +20,12 @@ const loginUser = async (req, res) => {
 
         const user = await User.findOne({ email })
             if (!user) {
-                return res.status(StatusCodes.NOT_FOUND).json({ msg: "User not found" })
+                return res.status(StatusCodes.NOT_FOUND).json({ msg: "Wrong login or password" }) 
             }
 
         const comparePasswords = await user.checkPassword(password)
             if (!comparePasswords) {
-                return res.status(StatusCodes.NOT_FOUND).json({ msg: "Wrong login/password" })
+                return res.status(StatusCodes.NOT_FOUND).json({ msg: "Wrong login or password" })
             }
 
         const token = user.createJWT()
@@ -33,14 +33,14 @@ const loginUser = async (req, res) => {
      
         res.status(StatusCodes.OK).json({ _id, firstName, lastName, token })
     } catch (error) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Failed to authorize "})
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Failed to authorize" })
     }
 }
 
 const checkUser = async (req, res) => {
     try {
-         const user = await User.findById(req.user.userID)
-
+         const user = await User.findById(req.user.userId)
+      
          if (!user) {
               return res.status(StatusCodes.NOT_FOUND).json({ msg: "User not found" })
          }
