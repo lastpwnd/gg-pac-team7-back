@@ -52,7 +52,7 @@ const createEvent = async (req, res) => {
             endDate: req.body.endDate,
             address: req.body.address,
             restrictions: req.body.restrictions,
-            eventImages: re.body.eventImages
+            eventImages: req.body.eventImages
             
         })
      
@@ -103,7 +103,7 @@ const updateEvent = async (req, res) => {
             endDate: req.body.endDate,
             address: req.body.address,
             restrictions: req.body.restrictions,
-            eventImages: re.body.eventImages
+            eventImages: req.body.eventImages
         })
         
         res.status(StatusCodes.OK).json({ msg: "Event is successfully updated!" })
