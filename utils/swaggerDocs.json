@@ -119,6 +119,32 @@
           "Events"
         ],
         "summary": "Get All Events",
+        "parameters":[
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "food"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -388,6 +414,22 @@
               "type": "string"
             },
             "example": "2013 Raleigh Blvd, Raleigh, NC 27604"
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "schema": {
+              "type": "double"
+            },
+            "example": "33.8895765"
+          },
+          {
+            "name": "lng",
+            "in": "query",
+            "schema": {
+              "type": "double"
+            },
+            "example": "-78.0382568"
           }
         ],
         "responses": {
