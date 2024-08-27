@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const express = require('express')
 const { StatusCodes } = require('http-status-codes') 
 
 const registerUser = async (req, res) => {

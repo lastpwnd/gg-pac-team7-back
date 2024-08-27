@@ -10,15 +10,15 @@ const getAllEvents = async (req, res) => {
             sortMethod = { 'title':Number(req.query.title) }
         }
     let method = {}
-        if(req.query.type){
-            method = {'type':String(req.query.type) }
+        if(req.query.category){
+            method = {'category':String(req.query.category) }
         } 
-    try {    
-        const events = await Event.find(method).sort(sortMethod)
-        res.status(StatusCodes.OK).json(events)
-    } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Failed retrieving events" })
-    }
+        try {    
+            const events = await Event.find(method).sort(sortMethod)
+            res.status(StatusCodes.OK).json(events)
+        } catch (error) {
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Failed retrieving events" })
+        }
 }
 
 const getEvent = async (req, res) => {
@@ -43,15 +43,17 @@ const createEvent = async (req, res) => {
             //required
             title: req.body.title,
             startDate: req.body.startDate,
-            endDate: req.body.endDate,
+            category: req.body.category,
             coordinates: req.body.coordinates,
             description: req.body.description,
             hostName: req.body.hostName,
-            hostUrl: req.body.hostUrl,
+            eventUrl: req.body.eventUrl,
             //non-required
+            endDate: req.body.endDate,
             address: req.body.address,
             restrictions: req.body.restrictions,
-            type: req.body.type
+            eventImages: re.body.eventImages
+            
         })
      
         const event = await Event.create(eventModel)
@@ -92,15 +94,16 @@ const updateEvent = async (req, res) => {
             //required
             title: req.body.title,
             startDate: req.body.startDate,
-            endDate: req.body.endDate,
+            category: req.body.category,
             coordinates: req.body.coordinates,
             description: req.body.description,
             hostName: req.body.hostName,
-            hostUrl: req.body.hostUrl,
+            eventUrl: req.body.eventUrl,
             //non-required
+            endDate: req.body.endDate,
             address: req.body.address,
             restrictions: req.body.restrictions,
-            type: req.body.type
+            eventImages: re.body.eventImages
         })
         
         res.status(StatusCodes.OK).json({ msg: "Event is successfully updated!" })
