@@ -20,7 +20,7 @@ const authValidation = (req, res, next) => {
 
     if(!authHeader || !authHeader.startsWith("Bearer"))
         {
-            return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error"})
+            return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error 1 "})
         }
 
     const token = authHeader.split(' ')[1]
@@ -28,11 +28,11 @@ const authValidation = (req, res, next) => {
    try {
 
         const payload = jwt.verify(token, process.env.JWT_SECRET)
-        res.user = { _id: payload._id, firstName: payload.firstName, lastName: payload.lastName, authPassed: true }
+        req.user = { userId: payload.userId }
         next()
 
    } catch (error) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error"})
+        return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error 2"})
    }
 }
 
