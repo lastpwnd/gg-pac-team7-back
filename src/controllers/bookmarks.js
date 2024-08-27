@@ -3,7 +3,7 @@ const Bookmark = require("../models/Bookmark");
 
 async function getAllBookmarks(req, res) {
   try {
-    const userId = req.user._id; // Ensure user ID is set in req.user
+    const userId = req.user.userId; // Ensure user ID is set in req.user
     const bookmarks = await Bookmark.find({ user: userId }).populate("event"); // Populate event details if needed
     res.status(StatusCodes.OK).json(bookmarks);
   } catch (error) {
@@ -14,10 +14,10 @@ async function getAllBookmarks(req, res) {
   }
 }
 
-const getBookmarkById = async (req, res) => {
+const getBookmark = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.userId;
 
     const bookmark = await Bookmark.findOne({ _id: id, user: userId }).populate(
       "event"
@@ -40,7 +40,8 @@ const getBookmarkById = async (req, res) => {
 
 const createBookmark = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.userId;
+    console.log(userId);
     const newBookmark = new Bookmark({ ...req.body, user: userId });
     const savedBookmark = await newBookmark.save();
     res.status(StatusCodes.CREATED).json(savedBookmark);
@@ -52,10 +53,10 @@ const createBookmark = async (req, res) => {
   }
 };
 
-const deleteBookmarkById = async (req, res) => {
+const deleteBookmark = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user._id;
+    const userId = req.user.userId;
 
     const deletedBookmark = await Bookmark.findOneAndDelete({
       _id: id,
@@ -79,7 +80,7 @@ const deleteBookmarkById = async (req, res) => {
 
 module.exports = {
   getAllBookmarks,
-  getBookmarkById,
+  getBookmark,
   createBookmark,
-  deleteBookmarkById,
+  deleteBookmark,
 };

@@ -38,7 +38,7 @@ UserSchema.pre('save', async function() {
 })
 
 UserSchema.methods.createJWT = function () {
-    return jwt.sign({userID:this._id, name: this.name}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES })
+    return jwt.sign({userId:this._id, name: this.name}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES })
 }
 
 UserSchema.methods.checkPassword = async function (candidatePassword) {

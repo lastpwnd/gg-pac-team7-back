@@ -28,7 +28,7 @@ const authValidation = (req, res, next) => {
    try {
 
         const payload = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = { userID: payload.userID }
+        req.user = { userId: payload.userId }
         next()
 
    } catch (error) {

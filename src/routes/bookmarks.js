@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const { authValidation } = require('../middleware/auth')
-const { getAllBookmarks, getBookmarkById, createBookmark, deleteBookmarkById } = require('../controllers/bookmarks')
+const { getAllBookmarks, getBookmark, createBookmark, deleteBookmark } = require('../controllers/bookmarks')
 
 router
     .get('/', authValidation, getAllBookmarks)
-    .get('/:id', authValidation,  getBookmarkById)
+    .get('/:id', authValidation,  getBookmark)
     .post('/', authValidation,  createBookmark)
-    .delete('/:id', authValidation, deleteBookmarkById)
+    .delete('/:id', authValidation, deleteBookmark)
 
 module.exports = router

@@ -1,7 +1,6 @@
 const fetch = require("node-fetch");
 
-// Replace with your actual API key
-const API_KEY = "AIzaSyBAKsiNIb-hxch9K6QiqoYJoZjo_ztllDI";
+const API_KEY = process.env.API_KEY;
 
 // Function to get coordinates from an address
 async function getCoordinates(address) {
