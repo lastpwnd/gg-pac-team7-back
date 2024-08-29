@@ -22,19 +22,16 @@ app.use(express.static("public"))
 app.use(favicon(__dirname + "/public/favicon.ico"))
 app.use(bodyParser.json())
 
-// routes
-app.get("/", (req, res) => {
-  res.redirect("/api/v1/docs") //redirects from root to api-docs
-})
 
 app.get("/api/v1", (req, res) => {
-  return res.json({ data: "This is a full stack app!" }) // need this route?
+  return res.json({ data: "This is a full stack app!" })
 });
 
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/events", eventsRouter)
 app.use("/api/v1/search", searchRouter)
 app.use("/api/v1/bookmarks", bookmarksRouter)
-app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
+
 
 module.exports = app
