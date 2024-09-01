@@ -9,6 +9,7 @@ const swaggerDocs = require('../utils/swaggerDocs.json')
 require("dotenv").config()
 
 const authRouter = require("./routes/auth.js")
+const profileRouter = require("./routes/profile.js")
 const eventsRouter = require("./routes/events.js")
 const searchRouter = require("./routes/search.js")
 const bookmarksRouter = require("./routes/bookmarks.js")
@@ -29,6 +30,7 @@ app.get("/api/v1", (req, res) => {
 
 app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/profile", profileRouter)
 app.use("/api/v1/events", eventsRouter)
 app.use("/api/v1/search", searchRouter)
 app.use("/api/v1/bookmarks", bookmarksRouter)
