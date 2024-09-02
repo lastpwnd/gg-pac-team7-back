@@ -7,7 +7,7 @@ const { getUserProfile, getOtherUserProfile, editUserProfile, updateUserProfile 
 
 router
     .get('/', authValidation, getUserProfile)
-    .get('/@:nickname', authValidation, getOtherUserProfile)
+    .get('/@:username', authValidation, getOtherUserProfile)
     .get('/edit/', authValidation, editUserProfile)
     .put('/edit/', authValidation, profileValidationRules, validateErrorHandler, updateUserProfile)
 module.exports = router

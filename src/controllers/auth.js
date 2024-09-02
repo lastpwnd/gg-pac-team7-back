@@ -8,7 +8,7 @@ const registerUser = async (req, res) => {
     } catch (error) {
         let errorMsg = "Failed to register user"
         if (error.code == 11000) {
-             errorMsg = "This e-mail is already registered"
+             errorMsg = "This e-mail or nickname is already registered"
         }
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: errorMsg})
     }
