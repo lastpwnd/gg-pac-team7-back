@@ -16,9 +16,9 @@ async function getAllBookmarks(req, res) {
 
 const getBookmark = async (req, res) => {
   try {
+
     const { id } = req.params
     const userId = req.user.userId
-
     const bookmark = await Bookmark.findOne({ _id: id, user: userId }).populate(
       "event"
     ) // Populate event details if needed
@@ -57,7 +57,6 @@ const deleteBookmark = async (req, res) => {
   try {
     const { id } = req.params
     const userId = req.user.userId
-
     const deletedBookmark = await Bookmark.findOneAndDelete({
       _id: id,
       user: userId,
@@ -84,3 +83,4 @@ module.exports = {
   createBookmark,
   deleteBookmark,
 }
+

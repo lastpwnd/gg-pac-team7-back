@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 // routes
 app.get("/api/v1", (req, res) => {
   return res.json({ data: "This is a full stack app!" })
-});
+})
 
 app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use("/api/v1/auth", authRouter)
