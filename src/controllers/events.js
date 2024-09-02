@@ -57,9 +57,9 @@ const createEvent = async (req, res) => {
         })
      
         const event = await Event.create(eventModel)
-        res.status(StatusCodes.OK).json(event)
+
+        res.status(StatusCodes.CREATED).json(event)
     } catch (error) {
-        console.log(error);
         let errorMsg = "Failed to create event"
         if (error.code == 11000) {
              errorMsg = "This event is already registered"

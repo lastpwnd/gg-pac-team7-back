@@ -11,6 +11,11 @@ const UserSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    userName: {
+        type:String,
+        unique:true,
+        required:true,
+    },
     email: {
         type:String,
         unique:true,
@@ -21,7 +26,8 @@ const UserSchema = new mongoose.Schema({
         required:true
     },
     avatarUrl:{
-        type:String
+        type:String,
+        default:""
     }
 },
 {

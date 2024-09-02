@@ -7,7 +7,8 @@ const registerValidation = [
     body('password', "Minimum length is 4, maximum - 30").isLength({min: 4, max: 30}),
     body('firstName', "Minimum length is 3, maximum - 20").trim().isLength({min: 3, max: 20}),
     body('lastName', "Minimum length is 3, maximum - 20").trim().isLength({min: 3, max: 20}),
-    //body('avatar', "Valid URL is required").trim().isURL() //till better times
+    body('userName', "Minimum length is 3, maximum - 20").trim().isLength({min: 3, max: 20}),
+    body('avatarUrl', "Valid URL is required").trim().isURL().optional({nullable: true})
 ]
 
 const loginValidation = [
@@ -21,7 +22,7 @@ const authValidation = (req, res, next) => {
 
     if(!authHeader || !authHeader.startsWith("Bearer"))
         {
-            return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error 1 "})
+            return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error" })
         }
 
     const token = authHeader.split(' ')[1]
@@ -33,7 +34,7 @@ const authValidation = (req, res, next) => {
         next()
 
    } catch (error) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error 2"})
+        return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Authorization Error" })
    }
 }
 
