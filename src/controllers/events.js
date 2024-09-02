@@ -57,6 +57,7 @@ const createEvent = async (req, res) => {
         })
      
         const event = await Event.create(eventModel)
+
         res.status(StatusCodes.CREATED).json(event)
     } catch (error) {
         let errorMsg = "Failed to create event"
