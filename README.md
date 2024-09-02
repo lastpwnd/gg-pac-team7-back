@@ -1,7 +1,7 @@
 ## Project Overview
 
-Name: Node/React Practicum Back-End  
-Description: This is the back-end server for a practicum project using Node.js and Express to create a RESTful API  
+**Name:** Node/React Practicum Back-End  
+**Description:** This is the back-end server for a practicum project using Node.js and Express to create a RESTful API  
 The server communicates with a MongoDB database and provides endpoints for the front-end React application
 
 ### Technology Stack
@@ -23,8 +23,8 @@ The server communicates with a MongoDB database and provides endpoints for the f
 
 Utilizing features of the Swagger-ui-express, API documentation can be accessed through `/api/v1/docs` route,  
 eliminating the need to surf through the `/controllers` and `/routes`, providing necessary data in a convenient form  
-![Swagger Docs Image](https://github.com/Code-the-Dream-School/gg-pac-team7-back/raw/main/images/back-end-swagger-docs.png)  
-> Also keep in mind that Render allocates minimum of its CPU time, so waiting for the `/api/v1/docs` response may take awhile     
+![Swagger Docs Image](https://github.com/Code-the-Dream-School/gg-pac-team7-back/raw/main/images/back-end-swagger-api-docs.png)  
+>> Also keep in mind that Render allocates minimum of its CPU time, so waiting for the `/api/v1/docs` response may take awhile     
 
 ### Database Models
 
@@ -34,10 +34,9 @@ DB models are located within `/models` directory:
     ./models/Event.js
     ./models/User.js
 ```
-Inside these files schemas can be found     
-Each schema maps to a MongoDB collection and defines the shape of the documents within that collection 
+Inside these files schemas can be found. Each schema maps to a MongoDB collection and defines the shape of the documents within that collection 
 
-_For example, several properties from `EventSchema`_:
+>_For example, several properties from `EventSchema`_:
 ``` 
     title: {
         type: String,
@@ -58,6 +57,7 @@ _For example, several properties from `EventSchema`_:
     
 ```
 Each one is named and has several attributes:   
+
 _`type`_ - defines DataType, accepts different values like String, Number, Date, Array, etc   
 _`unique`_ - property must be unique among other documents in the collection, otherwise duplicate error is casted   
 _`required`_ - property is integral, document can't exist without it, otherwise considered optional   
@@ -90,7 +90,8 @@ GOOGLE_API_KEY=<googleApiKey>
 
 #### Running the back-end server in Visual Studio Code
 
-_**Note**_: In the below example, the group's front-end repository was named `bb-practicum-team1-front` and the back-end repository was named `bb-practicum-team-1-back`. Your repository will have a **different** name, but the rest should look the same  
+_**Note**_: In the below example, the group's front-end repository was named `bb-practicum-team1-front` and the back-end repository was named `bb-practicum-team-1-back`. Your repository will have a **different** name, but the rest should look the same.
+
 ![Back end running in VSCode](https://github.com/Code-the-Dream-School/gg-pac-team7-back/raw/main/images/back-end-running-vsc.png)   
 
 #### Testing the back-end server API in the browser   
