@@ -23,7 +23,7 @@ The server communicates with a MongoDB database and provides endpoints for the f
 
 Utilizing features of the Swagger-ui-express, API documentation can be accessed through `/api/v1/docs` route,  
 eliminating the need to surf through the `/controllers` and `/routes`, providing necessary data in a convenient form  
-![Swagger Docs Image](https://github.com/Code-the-Dream-School/gg-pac-team7-back/raw/main/images/back-end-swagger-api-docs.png)  
+![Swagger Docs Image](https://raw.githubusercontent.com/lastpwnd/gg-pac-team7-back/main/images/back-end-swagger-api-docs.png)  
 >> Also keep in mind that Render allocates minimum of its CPU time, so waiting for the `/api/v1/docs` response may take awhile     
 
 ### Database Models
