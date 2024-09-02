@@ -35,5 +35,4 @@ app.use("/api/v1/events", eventsRouter)
 app.use("/api/v1/search", searchRouter)
 app.use("/api/v1/bookmarks", bookmarksRouter)
 
-
 module.exports = app
