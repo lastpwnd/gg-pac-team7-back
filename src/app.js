@@ -23,7 +23,7 @@ app.use(express.static("public"))
 app.use(favicon(__dirname + "/public/favicon.ico"))
 app.use(bodyParser.json())
 
-
+// routes
 app.get("/api/v1", (req, res) => {
   return res.json({ data: "This is a full stack app!" })
 });
@@ -34,6 +34,5 @@ app.use("/api/v1/profile", profileRouter)
 app.use("/api/v1/events", eventsRouter)
 app.use("/api/v1/search", searchRouter)
 app.use("/api/v1/bookmarks", bookmarksRouter)
-
 
 module.exports = app
