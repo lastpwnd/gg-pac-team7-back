@@ -41,7 +41,7 @@
             "Auth"
           ],
           "summary": "Register User",
-          "description": "Register new user request. All fields required, except 'avatarUrl'",
+          "description": "Register new user request. All fields required",
           "requestBody": {
             "content": {
               "application/json": {
@@ -49,11 +49,10 @@
                   "type": "object",
                   "example": {
                     "firstName": "Kate",
-                    "lastName": "Connor",
-                    "email": "connor95@mail.com",
-                    "password": "",
-                    "avatarUrl": ""
-  
+                    "lastName": "Petrova",
+                    "userName": "KatyaP",
+                    "email": "petrova95@mail.com",
+                    "password": ""
                   }
                 }
               }
