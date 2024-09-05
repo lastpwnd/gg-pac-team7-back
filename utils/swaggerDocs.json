@@ -59,12 +59,106 @@
             }
           },
           "responses": {
-            "200": {
-              "description": "Successful response",
+            "201": {
+              "description": "Created",
               "content": {
-                "application/json": {}
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "example": {
+                      "msg": "New user was successfully registered"
+                    }
+                  }
+                }
               }
-            }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "field",
+                            "value": "qwertymail.com",
+                            "msg": "Wrong address, valid example: yourname@mailservice.com",
+                            "path": "email",
+                            "location": "body"
+                        },
+                        {
+                            "type": "field",
+                            "value": "",
+                            "msg": "Minimum length is 4, maximum - 30",
+                            "path": "password",
+                            "location": "body"
+                        },
+                        {
+                            "type": "field",
+                            "value": "qw",
+                            "msg": "Minimum length is 3, maximum - 20",
+                            "path": "firstName",
+                            "location": "body"
+                        },
+                        {
+                            "type": "field",
+                            "value": "er",
+                            "msg": "Minimum length is 3, maximum - 20",
+                            "path": "lastName",
+                            "location": "body"
+                        },
+                        {
+                            "type": "field",
+                            "value": "ty",
+                            "msg": "Minimum length is 3, maximum - 20",
+                            "path": "userName",
+                            "location": "body"
+                        }
+                    ]
+                    
+                  }           
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "field",
+                            "value": "qwerty@mail.com",
+                            "msg": "Email is already registered",
+                            "path": "email",
+                            "location": "body"
+                          },
+                          {
+                            "type": "field",
+                            "value": "SimpleMan",
+                            "msg": "userName is already registered",
+                            "path": "userName",
+                            "location": "body"
+                          }
+                    ]   
+                  }           
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [{
+                      "msg": "Failed to register user"
+                    }]
+                  }
+                }
+              }
+            }   
           }
         }
       },
@@ -74,7 +168,7 @@
             "Auth"
           ],
           "summary": "Login User",
-          "description": "User login request. Correct email/password pair is required. Gives JSONWebToken in return",
+          "description": "User login request. Correct email/password pair is required.",
           "requestBody": {
             "content": {
               "application/json": {
@@ -90,9 +184,81 @@
           },
           "responses": {
             "200": {
-              "description": "Successful response",
+              "description": "OK",
               "content": {
-                "application/json": {}
+                "application/json": {
+                  "schema": {
+                  "type": "object",
+                  "example": {
+                    "msg": "Successfully logged in"
+                  }
+                }
+              }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "field",
+                            "value": "qwertymail.com",
+                            "msg": "Wrong address, valid example: yourname@mailservice.com",
+                            "path": "email",
+                            "location": "body"
+                        },
+                        {
+                            "type": "field",
+                            "value": "qwerty",
+                            "msg": "Minimum length is 4, maximum - 30",
+                            "path": "password",
+                            "location": "body"
+                        }
+                    ]
+                  }           
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "field",
+                            "value": "qwerty@mail.com",
+                            "msg": "Wrong login",
+                            "path": "login",
+                            "location": "body"
+                        },
+                        {
+                            "type": "field",
+                            "value": "",
+                            "msg": "Wrong password",
+                            "path": "password",
+                            "location": "body"
+                        }
+                    ]
+                  }           
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [{
+                      "msg": "Failed to login"
+                    }]
+                  }
+                }
               }
             }
           }
@@ -112,9 +278,51 @@
           ],
           "responses": {
             "200": {
-              "description": "Successful response",
+              "description": "OK",
               "content": {
-                "application/json": {}
+                "application/json": {
+                  "schema": {
+                  "type": "object",
+                  "example": {
+                    "_id": "d6sa78dasdasyd78as",
+                    "msg": "Authorized",
+                    "userName": "qwerty",
+                    "email": "qwerty@mail.com"
+                  }
+                }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "key",
+                            "value": "d6sa78dasdasyd78as",
+                            "msg": "Wrong credentials",
+                            "path": "userId",
+                            "location": "user"
+                        }
+                    ]
+                  }           
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [{
+                      "msg": "Failed to authenticate"
+                    }]
+                  }
+                }
               }
             }
           }
@@ -134,9 +342,34 @@
           ],
           "responses": {
             "200": {
-              "description": "Successful response",
+              "description": "OK",
               "content": {
-                "application/json": {}
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "example": {
+                      "_id": "d6sa78dasdasyd78asasfasfaf",
+                      "firstName": "firstname",
+                      "lastName": "lastname",
+                      "userName": "qwerty",
+                      "avatarUrl": "/avatars/default.png",
+                      "bookmarks": []
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [{
+                      "msg": "Failed to load your profile data"
+                    }]
+                  }
+                }
               }
             }
           }
@@ -147,8 +380,8 @@
           "tags": [
             "Profile"
           ],
-          "summary": "Specified User Profile",
-          "description": "If successful, returns specified user data along with all bookmarks",
+          "summary": "Other User Profile",
+          "description": "If successful, returns specified user's data along with all bookmarks",
           "parameters":[
             {
               "name": "username",
@@ -157,7 +390,7 @@
                 "type": "string"
               },
               "required":true,
-              "example":"JohnDoe"
+              "example":"Sarah90"
             }
           ],
           "security": [
@@ -167,9 +400,93 @@
           ],
           "responses": {
             "200": {
-              "description": "Successful response",
+              "description": "OK",
               "content": {
-                "application/json": {}
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "example": {
+                      "firstName": "Sarah",
+                      "lastName": "Altman",
+                      "userName": "Sarah90",
+                      "avatarUrl": "/avatars/macaw.png",
+                      "bookmarks": [
+                          {
+                              "event": {
+                                  "_id": "66cbaaa5c3e2e2a9c6730df5",
+                                  "title": "Wake County Animal Center",
+                                  "startDate": "2024-08-01T02:00:00.000Z",
+                                  "endDate": "2024-10-01T14:00:00.000Z",
+                                  "address": "820 Beacon Lake Dr, Raleigh, NC 27610",
+                                  "coordinates": [
+                                      35.7919433,
+                                      -78.5719131
+                                  ],
+                                  "description": "Here you will find a true friend!",
+                                  "restrictions": "none",
+                                  "hostName": "Wake County Animal Center",
+                                  "createdAt": "2024-08-25T22:05:25.588Z",
+                                  "updatedAt": "2024-08-25T22:05:25.588Z",
+                                  "__v": 0,
+                                  "category": "animal",
+                                  "eventUrl": "http://www.wakegov.com/pets",
+                                  "eventImages": [
+                                      ""
+                                  ]
+                              }
+                          }
+                      ]
+                  }
+                  }
+                }
+              }
+            },
+            "302": {
+              "description": "Found",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                        {
+                          "location": "/profile",
+                          "msg": "Redirect required"
+                        }
+                    ]
+                  }           
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "params",
+                            "value": "username",
+                            "msg": "Wrong credentials provided, has to be `@username`",
+                            "path": "path",
+                            "location": "req.params"
+                          }
+                    ]   
+                  }           
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [{
+                      "msg": "Failed to load user's data"
+                    }]
+                  }
+                }
               }
             }
           }
@@ -191,7 +508,47 @@
             "200": {
               "description": "Successful response",
               "content": {
-                "application/json": {}
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "example": {
+                      "_id": "66d6d3a18a112b",
+                      "firstName": "Ekaterina",
+                      "lastName": "Petrova",
+                      "userName": "KatyaP",
+                      "avatarUrl": "/avatars/face2.png",
+                      "avatarsList": [
+                          "/avatars/default.png",
+                          "/avatars/enlighten.png",
+                          "/avatars/face.png",
+                          "/avatars/face2.png",
+                          "/avatars/face3.png",
+                          "/avatars/deer.png",
+                          "/avatars/ganesha.png",
+                          "/avatars/koi.png",
+                          "/avatars/macaw.png",
+                          "/avatars/panda-bear.png",
+                          "/avatars/turtle.png",
+                          "/avatars/bear.png",
+                          "/avatars/kangaroo.png",
+                          "/avatars/sloth.png"
+                      ]
+                  }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [{
+                      "msg": "Failed to load profile data"
+                    }]
+                  }
+                }
               }
             }
           }
@@ -213,9 +570,11 @@
                 "schema": {
                   "type": "object",
                   "example": {
-                    "firstName": "Alexander",
-                    "userName":"SimpleMan",
-                    "password":""
+                    "firstName": "Kate",
+                    "lastName": "Petrova",
+                    "userName": "Katya",
+                    "password": "*****",
+                    "avatarUrl":"/avatars/face2.png"
                   }
                 }
               }
@@ -223,9 +582,71 @@
           },
           "responses": {
             "200": {
-              "description": "Successful response",
+              "description": "OK",
               "content": {
-                "application/json": {}
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "example": 
+                      [
+                        { 
+                          "msg": "Your profile was successfully updated!" 
+                        }
+                      ]
+                    
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "field",
+                            "value": "*******",
+                            "msg": "Incorrect password!",
+                            "path": "password",
+                            "location": "body"
+                          }
+                    ]   
+                  }           
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [
+                          {
+                            "type": "field",
+                            "value": "SimpleMan",
+                            "msg": "This username is already taken",
+                            "path": "userName",
+                            "location": "body"
+                          }
+                    ]   
+                  }           
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "example": [{
+                      "msg": "Failed updating profile"
+                    }]
+                  }
+                }
               }
             }
           }
