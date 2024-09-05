@@ -6,6 +6,7 @@ const logger = require("morgan")
 const bodyParser = require("body-parser")
 const swaggerUI = require('swagger-ui-express')
 const swaggerDocs = require('../utils/swaggerDocs.json')
+const path = require('path')
 require("dotenv").config()
 
 const authRouter = require("./routes/auth.js")
